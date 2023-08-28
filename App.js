@@ -10,8 +10,15 @@ export default function App() {
   function addGoalHandler(enteredGoalText) {
     setMyGoals(currentGoals => [
       ...currentGoals,
-      { text: enteredGoalText, key: Math.random().toString() },
+      { text: enteredGoalText, id: Math.random().toString() },
     ]);
+  }
+
+
+  function deleteGoalHandler(id) {
+    setMyGoals(currentGoals => {
+      return currentGoals.filter((goal) => goal.id !== id);
+    });
   }
 
   return (
@@ -21,7 +28,7 @@ export default function App() {
         <FlatList
           data={myGoals}
           renderItem={itemData => {
-            return <GoalItem text={itemData.item.text} />;
+            return <GoalItem text={itemData.item.text} onDeleteItem={deleteGoalHandler} id={itemData.item.id} />;
           }}
         />
       </View>
